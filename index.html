@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Google Search Console HTML Verification Tag -->
+    <meta name="google-site-verification" content="google9e66ea10cace5a94" />
     <meta name="theme-color" content="#10b981">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -487,7 +489,7 @@
                 return res.user;
             } catch (err) {
                 console.warn("Popup blocked or failed, switching to redirect method...", err);
-                if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/unauthorized-domain') {
+                if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/unauthorized-domain' || err.code === 'auth/operation-not-allowed') {
                     await signInWithRedirect(auth, provider);
                 } else {
                     throw err;
@@ -597,8 +599,10 @@
                         this.isLoggingIn = false;
                         if (err.code === 'auth/popup-closed-by-user') {
                             this.loginError = 'Jendela login Google ditutup sebelum selesai.';
-                        } else if (err.code === 'auth/configuration-not-found') {
-                            this.loginError = 'Konfigurasi Google Auth belum diaktifkan di Firebase Console.';
+                        } else if (err.code === 'auth/configuration-not-found' || err.code === 'auth/operation-not-allowed') {
+                            this.loginError = 'Login Google belum diaktifkan di Firebase Console (Authentication > Sign-in method).';
+                        } else if (err.code === 'auth/unauthorized-domain') {
+                            this.loginError = 'Domain ini belum didaftarkan di Firebase Console (Authentication > Settings > Authorized domains).';
                         } else {
                             this.loginError = 'Gagal login: ' + (err.message || 'Terjadi kesalahan');
                         }
