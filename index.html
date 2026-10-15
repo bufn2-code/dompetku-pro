@@ -601,16 +601,15 @@
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
         // Firebase Config Setup
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                apiKey: "AIzaSyDemoConfigForAppStandaloneMode",
-                authDomain: "dompetku-demo.firebaseapp.com",
-                projectId: "dompetku-demo",
-                storageBucket: "dompetku-demo.appspot.com",
-                messagingSenderId: "123456789",
-                appId: "1:123456789:web:abcdef123456"
-            };
+        const firebaseConfig = {
+  apiKey: "AIzaSyDcAto9ipgDoPDEWGvUbOmX2YuED_TNrCY",
+  authDomain: "dompetku-pro-1138c.firebaseapp.com",
+  projectId: "dompetku-pro-1138c",
+  storageBucket: "dompetku-pro-1138c.firebasestorage.app",
+  messagingSenderId: "250231556076",
+  appId: "1:250231556076:web:577de2843f8c36c59ea2c9",
+  measurementId: "G-F91472NWSF"
+};
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
