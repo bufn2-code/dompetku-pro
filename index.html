@@ -57,38 +57,124 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans h-full antialiased selection:bg-brand-500 selection:text-white" x-data="financeApp()" x-init="init()">
 
-    <!-- Login Screen (Mandatory Google Auth) -->
-    <div x-show="!user" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-emerald-50 via-slate-50 to-teal-50 overflow-y-auto" style="display: none;">
-        <div class="max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 text-center space-y-6 my-auto">
-            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center text-white text-2xl mx-auto shadow-lg shadow-brand-500/30">
-                <i class="fa-solid fa-wallet"></i>
-            </div>
-            <div>
-                <h1 class="text-2xl font-extrabold text-slate-900">DompetKu Pro</h1>
-                <p class="text-xs text-slate-500 mt-1">Silakan masuk menggunakan akun Google untuk mengakses data keuangan Anda</p>
-            </div>
-            
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left space-y-2 text-xs text-slate-600">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-lock text-brand-500"></i>
-                    <span>Autentikasi Aman via Google Auth</span>
+    <!-- Public Landing Page / Login Screen (Compliant with Google Branding Verification) -->
+    <div x-show="!user" class="min-h-full flex flex-col justify-between bg-gradient-to-br from-emerald-50 via-slate-50 to-teal-50 overflow-y-auto">
+        
+        <!-- Header / Navigation for Public Visitors -->
+        <header class="w-full max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-wallet text-lg"></i>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-cloud text-brand-500"></i>
-                    <span>Sinkronisasi Real-time Cloud Firestore</span>
+                <span class="text-xl font-extrabold text-slate-800">DompetKu Pro</span>
+            </div>
+            <button @click="openPrivacyPolicy" class="text-xs font-semibold text-slate-600 hover:text-brand-600 transition-colors cursor-pointer flex items-center space-x-1">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Kebijakan Privasi</span>
+            </button>
+        </header>
+
+        <!-- Main Hero Section explaining App Purpose -->
+        <main class="w-full max-w-4xl mx-auto px-6 py-8 my-auto text-center space-y-8">
+            <div class="space-y-4">
+                <span class="px-3 py-1 bg-brand-100 text-brand-700 text-xs font-bold rounded-full inline-block border border-brand-200">
+                    Aplikasi Keuangan Pribadi Berbasis Cloud
+                </span>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 leading-tight">
+                    Kelola Keuangan Anda Secara Pintar & Transparan
+                </h1>
+                <p class="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    DompetKu Pro adalah platform manajemen keuangan pribadi modern yang membantu Anda mencatat pemasukan, melacak pengeluaran harian, dan menganalisis laporan keuangan bulanan secara real-time.
+                </p>
+            </div>
+
+            <!-- Value Proposition Features -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left max-w-3xl mx-auto">
+                <div class="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-1">
+                    <i class="fa-solid fa-receipt text-brand-500 text-lg mb-1"></i>
+                    <h2 class="text-xs font-bold text-slate-800">Pencatatan Cepat</h2>
+                    <p class="text-[11px] text-slate-500">Catat setiap transaksi pemasukan dan pengeluaran harian hanya dalam hitungan detik.</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-1">
+                    <i class="fa-solid fa-cloud text-brand-500 text-lg mb-1"></i>
+                    <h2 class="text-xs font-bold text-slate-800">Sinkronisasi Cloud</h2>
+                    <p class="text-[11px] text-slate-500">Data tersimpan aman di Cloud Firestore dan selalu ter-sinkron di seluruh perangkat Anda.</p>
+                </div>
+                <div class="bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-1">
+                    <i class="fa-solid fa-chart-line text-brand-500 text-lg mb-1"></i>
+                    <h2 class="text-xs font-bold text-slate-800">Analisis Laporan</h2>
+                    <p class="text-[11px] text-slate-500">Dapatkan gambaran ringkas kondisi arus kas dan saldo keuangan bulanan Anda.</p>
                 </div>
             </div>
 
-            <button @click="loginWithGoogle" type="button" class="w-full bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold py-3.5 px-4 rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center space-x-3 active:scale-95 cursor-pointer">
-                <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-                </svg>
-                <span class="text-sm" x-text="isLoggingIn ? 'Memproses login...' : 'Masuk dengan Google'"></span>
-            </button>
-            <p x-show="loginError" class="text-xs text-rose-500 font-medium px-2" x-text="loginError"></p>
+            <!-- Login Action Box -->
+            <div class="max-w-md mx-auto bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 space-y-5">
+                <div class="space-y-1">
+                    <h2 class="text-lg font-bold text-slate-800">Mulai Kelola Keuangan</h2>
+                    <p class="text-xs text-slate-500">Masuk dengan akun Google Anda untuk mengakses dashboard pribadi</p>
+                </div>
+
+                <button @click="loginWithGoogle" type="button" class="w-full bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold py-3.5 px-4 rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center space-x-3 active:scale-95 cursor-pointer">
+                    <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    <span class="text-sm" x-text="isLoggingIn ? 'Memproses login...' : 'Masuk dengan Google'"></span>
+                </button>
+                <p x-show="loginError" class="text-xs text-rose-500 font-medium px-2" x-text="loginError"></p>
+
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-center space-x-2 text-[11px] text-slate-400">
+                    <i class="fa-solid fa-lock text-brand-500"></i>
+                    <span>Autentikasi Aman & Enkripsi Firebase</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Public Footer -->
+        <footer class="w-full text-center py-4 text-xs text-slate-400 border-t border-slate-200/50">
+            <p>&copy; DompetKu Pro. Seluruh Hak Cipta Dilindungi. <button @click="openPrivacyPolicy" class="text-brand-600 hover:underline cursor-pointer">Kebijakan Privasi</button></p>
+        </footer>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div x-show="isPrivacyPolicyOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 overflow-y-auto" style="display: none;">
+        <div @click.outside="isPrivacyPolicyOpen = false" class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-100 my-auto max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-shield-halved text-brand-600 text-lg"></i>
+                    <h3 class="font-bold text-base text-slate-800">Kebijakan Privasi (Privacy Policy)</h3>
+                </div>
+                <button @click="isPrivacyPolicyOpen = false" class="text-slate-400 hover:text-slate-600 cursor-pointer p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="overflow-y-auto space-y-3 text-xs text-slate-600 leading-relaxed pr-2 flex-1">
+                <p class="font-semibold text-slate-700">Terakhir Diperbarui: Oktober 2026</p>
+                
+                <h4 class="font-bold text-slate-800 text-sm">1. Informasi yang Kami Kumpulkan</h4>
+                <p>Saat Anda menggunakan DompetKu Pro dan masuk menggunakan akun Google Anda, kami hanya mengumpulkan informasi profil dasar yaitu nama pengguna, alamat email, dan foto profil. Kami juga menyimpan data transaksi keuangan (pemasukan dan pengeluaran) yang Anda masukkan secara sukarela.</p>
+
+                <h4 class="font-bold text-slate-800 text-sm">2. Penggunaan Informasi</h4>
+                <p>Informasi akun Anda digunakan secara eksklusif untuk mendatangkan identitas pengguna (*authentication*) dan memastikan bahwa data keuangan Anda hanya dapat diakses oleh Anda sendiri. Kami tidak memperjualbelikan atau membagikan data pribadi Anda kepada pihak ketiga mana pun.</p>
+
+                <h4 class="font-bold text-slate-800 text-sm">3. Penyimpanan Data & Keamanan</h4>
+                <p>Data keuangan Anda disimpan secara aman di Google Cloud Firestore menggunakan standar enkripsi mutakhir. Hanya akun yang terautentikasi secara sah yang dapat membaca dan menulis data transaksi masing-masing.</p>
+
+                <h4 class="font-bold text-slate-800 text-sm">4. Hak Pengguna</h4>
+                <p>Anda berhak untuk menghapus data transaksi Anda kapan saja melalui aplikasi atau meminta penghapusan akun secara permanen dengan menghubungi pengembang.</p>
+
+                <h4 class="font-bold text-slate-800 text-sm">5. Kontak Kami</h4>
+                <p>Jika Anda memiliki pertanyaan terkait Kebijakan Privasi ini, Anda dapat menghubungi kami melalui halaman pengembang aplikasi.</p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 text-right shrink-0">
+                <button @click="isPrivacyPolicyOpen = false" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl cursor-pointer">
+                    Tutup & Mengerti
+                </button>
+            </div>
         </div>
     </div>
 
@@ -355,21 +441,22 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
 
-        // Handle redirect result on mobile load
+        // Handle redirect result on mobile / fallback
         getRedirectResult(auth).catch((error) => {
             console.error("Redirect login error:", error);
         });
 
         window.firebaseLoginGoogle = async () => {
             try {
-                // Try popup first
+                // Gunakan popup standar
                 const res = await signInWithPopup(auth, provider);
                 return res.user;
             } catch (err) {
                 console.warn("Popup blocked or failed, switching to redirect method...", err);
-                if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
-                    // Fallback to redirect for strict mobile browsers
+                if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/unauthorized-domain') {
+                    // Fallback redirect untuk HP / browser dengan aturan proteksi ketat
                     await signInWithRedirect(auth, provider);
                 } else {
                     throw err;
@@ -380,6 +467,18 @@
         window.firebaseLogout = () => signOut(auth);
 
         window.initAuthAndFirestore = (component) => {
+            // Tangkap hasil redirect jika login via HP
+            getRedirectResult(auth).then((result) => {
+                if (result?.user) {
+                    component.user = { uid: result.user.uid, displayName: result.user.displayName, email: result.user.email, photoURL: result.user.photoURL };
+                    component.isLoggingIn = false;
+                }
+            }).catch((err) => {
+                console.error("Redirect login error:", err);
+                component.isLoggingIn = false;
+                component.loginError = 'Gagal login: Domain belum diotorisasi di Firebase Console atau akses ditolak.';
+            });
+
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     component.user = { uid: user.uid, displayName: user.displayName, email: user.email, photoURL: user.photoURL };
@@ -422,6 +521,7 @@
                 user: null,
                 isLoggingIn: false,
                 loginError: '',
+                isPrivacyPolicyOpen: false,
                 currentTab: 'dashboard',
                 navItems: [
                     { id: 'dashboard', label: 'Dashboard', icon: 'fa-solid fa-chart-pie' },
@@ -435,6 +535,10 @@
                 isModalOpen: false,
                 form: { type: 'expense', title: '', amount: '', category: '', date: new Date().toISOString().split('T')[0] },
                 unsubscribeFirestore: null,
+
+                openPrivacyPolicy() {
+                    this.isPrivacyPolicyOpen = true;
+                },
 
                 init() {
                     if (window.initAuthAndFirestore) {
